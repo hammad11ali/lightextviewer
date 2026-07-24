@@ -1,27 +1,30 @@
-```gitignore
-# Compiled and binary files
+```
+# Build artifacts
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+*.cmake
 *.o
-*.obj
 *.a
-*.lib
 *.so
+*.dylib
 *.dll
 *.exe
 *.out
 
-# Build directories
-build/
-dist/
-target/
-
 # Dependencies
-node_modules/
-venv/
-.venv/
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-.gradle/
+vendor/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
 
 # Editors
 .vscode/
@@ -29,16 +32,7 @@ __pycache__/
 *.swp
 *.swo
 
-# Logs and temp files
-*.log
-*.tmp
-
-# System files
+# OS
 .DS_Store
 Thumbs.db
-
-# Environment files
-.env
-.env.local
-*.env.*
 ```
