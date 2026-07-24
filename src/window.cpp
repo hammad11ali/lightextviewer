@@ -9,6 +9,7 @@
 
 #ifdef _WIN32
 #include <windowsx.h>
+#include <commdlg.h>
 #endif
 
 namespace editor {
@@ -113,17 +114,24 @@ bool Window::loadFile(const std::wstring& path) {
         return false;
     }
     
-    // For now, we'll create a simple test document
-    // In a full implementation, we would memory-map the file
     m_currentFilePath = path;
     m_hasBom = info.hasBom;
     m_isModified = false;
     
-    // Initialize with sample content for testing
-    std::string testContent = "Hello, World!\nThis is a test file.\n";
-    m_document->initialize(testContent.data(), testContent.length());
+    // Load actual file content
+    m_document->initialize(info.content.data(), info.content.length());
+    
+    // Reset caret position
+    m_caretLine = 0;
+    m_caretColumn = 0;
+    m_hasSelection = false;
     
     updateTitle();
+    
+    // Force repaint
+#ifdef _WIN32
+    InvalidateRect(static_cast<HWND>(m_hwnd), nullptr, TRUE);
+#endif
     
     return true;
 }
@@ -254,8 +262,23 @@ void Window::handleKeyDown(int key, bool ctrl, bool shift) {
         switch (key) {
             case 'O':  // Ctrl+O - Open file
                 {
-                    // Simple open dialog placeholder
-                    // In full implementation, use GetOpenFileNameW
+                    OPENFILENAMEW ofn = {};
+                    wchar_t szFile[MAX_PATH] = L"";
+                    
+                    ofn.lStructSize = sizeof(OPENFILENAMEW);
+                    ofn.hwndOwner = static_cast<HWND>(m_hwnd);
+                    ofn.lpstrFile = szFile;
+                    ofn.nMaxFile = MAX_PATH;
+                    ofn.lpstrFilter = L"All Files (*.*)\0*.*\0Text Files (*.txt)\0*.txt\0";
+                    ofn.nFilterIndex = 1;
+                    ofn.lpstrFileTitle = nullptr;
+                    ofn.nMaxFileTitle = 0;
+                    ofn.lpstrInitialDir = nullptr;
+                    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+                    
+                    if (GetOpenFileNameW(&ofn)) {
+                        loadFile(szFile);
+                    }
                 }
                 break;
                 

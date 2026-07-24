@@ -47,6 +47,7 @@ if(WIN32)
         ole32
         uuid
         dwrite
+        comdlg32
     )
 endif()
 

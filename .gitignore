@@ -1,9 +1,8 @@
 # Compiled and binary files
 *.o
-*.obj
 *.a
-*.lib
 *.so
+*.dylib
 *.dll
 *.exe
 *.out
@@ -16,13 +15,17 @@ target/
 cmake-build-*/
 
 # Dependencies
-node_modules/
-venv/
-.venv/
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-.gradle/
+vendor/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
 
 # Editors
 .vscode/
@@ -30,11 +33,7 @@ __pycache__/
 *.swp
 *.swo
 
-# Logs and temp files
-*.log
-*.tmp
-
-# System files
+# OS
 .DS_Store
 Thumbs.db
 
