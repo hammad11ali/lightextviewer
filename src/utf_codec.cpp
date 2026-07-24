@@ -1,4 +1,5 @@
 #include "utf_codec.h"
+#include <windows.h>
 #include <cstring>
 
 namespace editor {
