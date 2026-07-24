@@ -9,7 +9,8 @@ PieceTree::PieceTree() = default;
 PieceTree::~PieceTree() = default;
 
 void PieceTree::initialize(const char* data, size_t length) {
-    m_originalBuffer = data;
+    m_originalBufferData.assign(data ? data : "", length);
+    m_originalBuffer = m_originalBufferData.data();
     m_originalLength = length;
     m_addBuffer.clear();
     m_pieces.clear();

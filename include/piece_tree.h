@@ -162,7 +162,8 @@ private:
      */
     void rebuildLineIndex();
     
-    const char* m_originalBuffer = nullptr;  // Original file data (not owned)
+    const char* m_originalBuffer = nullptr;  // Pointer into owned original buffer
+    std::string m_originalBufferData;         // Owned copy of original file data
     size_t m_originalLength = 0;              // Length of original buffer
     
     std::string m_addBuffer;                  // Append-only buffer for edits

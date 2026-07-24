@@ -181,9 +181,16 @@ LRESULT Window::processMessage(UINT msg, WPARAM wParam, LPARAM lParam) {
             break;
             
         case WM_KEYDOWN:
+        case WM_SYSKEYDOWN:
             {
-                bool ctrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
-                bool shift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
+                bool ctrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0 ||
+                            (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0 ||
+                            (GetKeyState(VK_LCONTROL) & 0x8000) != 0 ||
+                            (GetKeyState(VK_RCONTROL) & 0x8000) != 0;
+                bool shift = (GetKeyState(VK_SHIFT) & 0x8000) != 0 ||
+                             (GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0 ||
+                             (GetKeyState(VK_LSHIFT) & 0x8000) != 0 ||
+                             (GetKeyState(VK_RSHIFT) & 0x8000) != 0;
                 handleKeyDown(static_cast<int>(wParam), ctrl, shift);
             }
             break;
@@ -260,7 +267,8 @@ void Window::handleKeyDown(int key, bool ctrl, bool shift) {
 #ifdef _WIN32
     if (ctrl) {
         switch (key) {
-            case 'O':  // Ctrl+O - Open file
+            case 'O':
+            case 'o':
                 {
                     OPENFILENAMEW ofn = {};
                     wchar_t szFile[MAX_PATH] = L"";
