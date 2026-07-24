@@ -1,4 +1,5 @@
 #include "search_engine.h"
+#include "utf_codec.h"
 #include <algorithm>
 #include <cwctype>
 

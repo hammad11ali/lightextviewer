@@ -37,7 +37,7 @@ set(HEADERS
 )
 
 # Create executable
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${HEADERS})
 
 # Link Windows libraries
 if(WIN32)

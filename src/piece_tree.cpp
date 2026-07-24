@@ -1,4 +1,5 @@
 #include "piece_tree.h"
+#include "utf_codec.h"
 #include <cstring>
 #include <algorithm>
 
