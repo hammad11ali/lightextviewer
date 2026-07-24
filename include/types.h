@@ -57,6 +57,7 @@ struct FileInfo {
     bool isModified = false;
     bool isValid = false;
     std::string error;
+    std::string content;  // File content in UTF-8
 };
 
 // Constants

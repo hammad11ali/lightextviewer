@@ -42,17 +42,35 @@ FileInfo FileHandler::openFile(const std::wstring& path) {
     
     info.size = static_cast<size_t>(fileSize.QuadPart);
     
-    // For now, we just return file info without loading content
-    // The actual content loading will be done via memory mapping in the editor
-    info.isValid = true;
-    
-    // Check for BOM by reading first few bytes
-    char bom[4];
-    DWORD bytesRead = 0;
-    if (ReadFile(hFile, bom, 3, &bytesRead, nullptr) && bytesRead >= 3) {
-        info.hasBom = (static_cast<unsigned char>(bom[0]) == 0xEF &&
-                       static_cast<unsigned char>(bom[1]) == 0xBB &&
-                       static_cast<unsigned char>(bom[2]) == 0xBF);
+    // Read entire file content
+    if (info.size > 0) {
+        info.content.resize(info.size);
+        DWORD bytesRead = 0;
+        SetFilePointer(hFile, 0, nullptr, FILE_BEGIN);
+        
+        if (ReadFile(hFile, &info.content[0], static_cast<DWORD>(info.size), &bytesRead, nullptr)) {
+            info.content.resize(bytesRead);
+            
+            // Check for BOM
+            if (bytesRead >= 3) {
+                info.hasBom = (static_cast<unsigned char>(info.content[0]) == 0xEF &&
+                               static_cast<unsigned char>(info.content[1]) == 0xBB &&
+                               static_cast<unsigned char>(info.content[2]) == 0xBF);
+                
+                // Skip BOM in content if present
+                if (info.hasBom) {
+                    info.content = info.content.substr(3);
+                }
+            }
+            
+            info.isValid = true;
+        } else {
+            info.error = "Failed to read file";
+        }
+    } else {
+        // Empty file is valid
+        info.isValid = true;
+        info.hasBom = false;
     }
     
     CloseHandle(hFile);
