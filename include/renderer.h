@@ -1,7 +1,12 @@
 #pragma once
 
+#include <vector>
+#include <string>
+
 #ifdef _WIN32
 #include <windows.h>
+#include <dwrite.h>
+#include <d2d1.h>
 #endif
 
 namespace editor {

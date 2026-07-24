@@ -5,6 +5,7 @@
 #include "renderer.h"
 #include "clipboard_handler.h"
 #include "file_handler.h"
+#include "utf_codec.h"
 
 #ifdef _WIN32
 #include <windowsx.h>
@@ -190,6 +191,7 @@ LRESULT Window::processMessage(UINT msg, WPARAM wParam, LPARAM lParam) {
                         TextPosition{m_caretLine, m_caretColumn});
                     m_document->insert(caretOffset, result.utf8);
                     m_caretColumn++;
+                    InvalidateRect(static_cast<HWND>(m_hwnd), nullptr, TRUE);
                 }
             }
             break;
