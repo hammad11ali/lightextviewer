@@ -436,7 +436,8 @@ void PieceTree::rebuildLineIndex() {
             if (data[i] == '\n') {
                 // Found newline - next line starts after it
                 size_t nextLineOffset = currentOffset + (i - pieceStart) + 1;
-                if (nextLineOffset < m_totalLength) {
+                // Add line start if it's within document bounds
+                if (nextLineOffset <= m_totalLength) {
                     m_lineOffsets.push_back(nextLineOffset);
                 }
             }
