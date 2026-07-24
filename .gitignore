@@ -1,57 +1,44 @@
-```
-# CMake build directory
-build/
-
-# Compiled object files
+```gitignore
+# Compiled and binary files
 *.o
 *.obj
 *.a
 *.lib
 *.so
-*.dylib
 *.dll
-
-# Executables
 *.exe
 *.out
 
-# CMake specific files
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-Makefile
+# Build directories
+build/
+dist/
+target/
 
-# Temporary files
-*.tmp
-*.swp
+# Dependencies
+node_modules/
+venv/
+.venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.gradle/
 
-# Logs
-*.log
-
-# IDE files
+# Editors
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# Coverage reports
-coverage/
-htmlcov/
-*.coverage
+# Logs and temp files
+*.log
+*.tmp
+
+# System files
+.DS_Store
+Thumbs.db
 
 # Environment files
 .env
 .env.local
 *.env.*
-
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Node modules
-node_modules/
-
-# Virtual environments
-venv/
-.venv/
 ```
